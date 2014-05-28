@@ -7,7 +7,7 @@
 #include <lk_mat22f.h>
 #include <QTime>
 #include <iostream>
-#include <omp.h>
+//#include <omp.h>
 
 int main(int argc, char *argv[])
 {
@@ -70,7 +70,12 @@ int main(int argc, char *argv[])
 	if (imgLeft.size () != imgRight.size ()) {
 		exit (-2);
 	}
-	QImage  leftP [__LK_PYRAMIDE_LEVELS],rightP[__LK_PYRAMIDE_LEVELS],leftDX[__LK_PYRAMIDE_LEVELS],leftDY[__LK_PYRAMIDE_LEVELS];
+
+	QImage * leftP   = new QImage [__LK_PYRAMIDE_LEVELS];
+	QImage * rightP  = new QImage [__LK_PYRAMIDE_LEVELS];
+	QImage * leftDX  = new QImage [__LK_PYRAMIDE_LEVELS];
+	QImage * leftDY  = new QImage [__LK_PYRAMIDE_LEVELS];
+
 	int curtime = timer1.elapsed();
 	int difftime = timer1.elapsed ();
 	std::cout << "Images loaded" << 0.001f * difftime << " (" << 0.001f * curtime<< ")" << " seconds\n";
@@ -117,7 +122,7 @@ int main(int argc, char *argv[])
 	curtime = timer1.elapsed();
 	std::cout << "Constructors" << 0.001f * difftime << " (" << 0.001f * curtime << ")" << " seconds\n";
 
-#pragma omp parallel for firstprivate(leftP,rightP,leftDX,leftDY, hsv_data, diff_data, warp_data,mainheight,mainwidth) private(g,d,u,iu,ix,iy,ik,b,n,iterativeLK,Gradient_Matrix,res_disparity,int_disparity,magnitute,amplitude,rValue,lValue,diff,imageGradXwindow,imageGradYwindow,invalid,invalidshift,width,rightJL,leftJL,wx,wy,k,level,tx,ty) private (uy,ux,u0,rx,ry)
+	//#pragma omp parallel for firstprivate(leftP,rightP,leftDX,leftDY, hsv_data, diff_data, warp_data,mainheight,mainwidth) private(g,d,u,iu,ix,iy,ik,b,n,iterativeLK,Gradient_Matrix,res_disparity,int_disparity,magnitute,amplitude,rValue,lValue,diff,imageGradXwindow,imageGradYwindow,invalid,invalidshift,width,rightJL,leftJL,wx,wy,k,level,tx,ty) private (uy,ux,u0,rx,ry)
 
 	for (ux = 0; ux < mainwidth; ++ux)
 	{
@@ -134,7 +139,7 @@ int main(int argc, char *argv[])
 			g[__LK_PYRAMIDE_LEVELS - 1] = lk_vec2f(0,0);
 			for ( level = __LK_PYRAMIDE_LEVELS - 1; level >= 0; --level)
 			{
-				u[level] = u0 / pow (2,level);	 //!< Положение точки u на текущем уровне
+				u[level] = u0 / powf (2,level);	 //!< Положение точки u на текущем уровне
 				iu[level] = u[level].round (); //!< Округленное значение
 				d[level] = lk_vec2f(0,0);
 				imageGradXwindow = (const QRgb *) leftDX[level].bits ();
@@ -223,5 +228,11 @@ int main(int argc, char *argv[])
 	QImage((uchar*)hsv_data,mainwidth,mainheight,QImage::Format_ARGB32).save("hsvmap.png");
 	QImage((uchar*)diff_data,mainwidth,mainheight,QImage::Format_ARGB32).save("diff.png");
 	QImage((uchar*)warp_data,mainwidth,mainheight,QImage::Format_ARGB32).save(argv[7]);
+
+	delete [] leftP ;
+	delete [] rightP;
+	delete [] leftDX;
+	delete [] leftDY;
+
 	std::cout << "Done\n";
 }//End of Main

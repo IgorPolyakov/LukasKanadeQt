@@ -26,13 +26,11 @@ HEADERS += \
     lk_mat22f.h \
     lk_vec2i.h
 
-
-QMAKE_LIBS    += -lgomp
-QMAKE_CXXFLAGS+= -fopenmp
-QMAKE_LFLAGS  += -fopenmp
-
 #PROFILING WITH GPROG
 #QMAKE_CXXFLAGS_DEBUG += -pg
 #QMAKE_LFLAGS_DEBUG += -pg
 #QMAKE_CXXFLAGS_RELEASE += -pg
 #QMAKE_LFLAGS_RELEASE += -pg
+
+OTHER_FILES += \
+    gomp.lib

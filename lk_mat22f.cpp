@@ -1,5 +1,7 @@
 #include "lk_mat22f.h"
 
+float lk_mat22f::eps = 1e-5;
+
 lk_mat22f::lk_mat22f()
 {
 	a1 = a2 = lk_vec2f(0,0);
@@ -69,6 +71,6 @@ lk_vec2f lk_mat22f::solve (const lk_vec2f b) const
 
 void lk_mat22f::add(float a11, float a12, float a21, float a22)
 {
-	a1.add(a11,a12);
-	a2.add(a21,a22);
+    a1.add(a11,a12);
+    a2.add(a21,a22);
 }

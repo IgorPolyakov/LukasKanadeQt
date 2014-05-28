@@ -22,7 +22,7 @@ class lk_mat22f
 {
 private:
     //! Константа точности вычислений
-    static const float eps = 1e-5;
+    static float eps;
 public:
     //! Конструктор по умолчанию
     lk_mat22f();
@@ -52,5 +52,6 @@ public:
     lk_vec2f solve (lk_vec2f) const;
     void add (float a11, float a12, float a21, float a22);
 };
+
 
 #endif // LK_MAT22F_H
