@@ -12,19 +12,19 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp \
-    lk_utils.cpp \
-    lk_conv.cpp \
-    lk_vec2f.cpp \
-    lk_mat22f.cpp \
-    lk_vec2i.cpp
+SOURCES += src/main.cpp \
+    src/lk_utils.cpp \
+    src/lk_conv.cpp \
+    src/lk_vec2f.cpp \
+    src/lk_mat22f.cpp \
+    src/lk_vec2i.cpp
 
 HEADERS += \
-    lk_utils.h \
-    lk_conv.h \
-    lk_vec2f.h \
-    lk_mat22f.h \
-    lk_vec2i.h
+    src/lk_utils.h \
+    src/lk_conv.h \
+    src/lk_vec2f.h \
+    src/lk_mat22f.h \
+    src/lk_vec2i.h
 
 #PROFILING WITH GPROG
 #QMAKE_CXXFLAGS_DEBUG += -pg
