@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 	}
 	difftime = timer1.elapsed () - curtime;
 	curtime = timer1.elapsed();
-	std::cout << "Images converted" << 0.001f * difftime << " (" << 0.001f * curtime << ")" << " seconds\n";
+    std::cout << "Images converted " << 0.001f * difftime << " (" << 0.001f * curtime << ")" << " seconds\n";
 	QImage hsv_result_image = imgLeft.copy ();
 	QImage diff_result_image = imgLeft.copy ();
 	QImage warp_result_image = imgLeft.copy ();
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 
 	difftime = timer1.elapsed () - curtime;
 	curtime = timer1.elapsed();
-	std::cout << "Constructors" << 0.001f * difftime << " (" << 0.001f * curtime << ")" << " seconds\n";
+    std::cout << "Constructors " << 0.001f * difftime << " (" << 0.001f * curtime << ")" << " seconds\n";
 
 	//#pragma omp parallel for firstprivate(leftP,rightP,leftDX,leftDY, hsv_data, diff_data, warp_data,mainheight,mainwidth) private(g,d,u,iu,ix,iy,ik,b,n,iterativeLK,Gradient_Matrix,res_disparity,int_disparity,magnitute,amplitude,rValue,lValue,diff,imageGradXwindow,imageGradYwindow,invalid,invalidshift,width,rightJL,leftJL,wx,wy,k,level,tx,ty) private (uy,ux,u0,rx,ry)
 
@@ -213,7 +213,10 @@ int main(int argc, char *argv[])
 			perc = float(curp)/all;
 			if (perc > barrier)
 			{
-				std::cout <<  "" << perc*100 <<  "%\n";
+                difftime = timer1.elapsed () - curtime;
+                curtime = timer1.elapsed();
+                //std::cout <<  "" << perc*100 <<  "%\n";
+                std::cout << "Progress " << perc*100 << "% \t\t"<< 0.001f * difftime << " (" << 0.001f * curtime << ")" << " seconds\n";
 				barrier = perc + 0.1;
 			}
 		}//
@@ -225,8 +228,15 @@ int main(int argc, char *argv[])
 		//	free(n);
 	}//End of each point
 	std::cout << "Time for picture " << mainwidth << "x" << mainheight << " is " << 0.001f * timer1.elapsed() << " seconds\n";
-	QImage((uchar*)hsv_data,mainwidth,mainheight,QImage::Format_ARGB32).save("hsvmap.png");
-	QImage((uchar*)diff_data,mainwidth,mainheight,QImage::Format_ARGB32).save("diff.png");
+    //QString nameHsvOutFile;
+    //nameHsvOutFile = "HSV_MAP " + QString (argv[3]) + ".png";
+    //QString nameDiffOutFile = "DIFF_MAP .png";
+
+    QString nameHsvOutFile = ("HSV_MAP" + QString (argv[3]) + " " + QString (argv[4]) + " " + QString (argv[5])  + " " + QString (argv[6])  + " " + QString (argv[7])  + ".png");
+    QString nameDiffOutFile = ("DIFF_MAP" + QString (argv[3]) + " " + QString (argv[4]) + " " + QString (argv[5])  + " " + QString (argv[6])  + " " + QString (argv[7])  + ".png");
+
+    QImage((uchar*)hsv_data,mainwidth,mainheight,QImage::Format_ARGB32).save(nameHsvOutFile);
+    QImage((uchar*)diff_data,mainwidth,mainheight,QImage::Format_ARGB32).save(nameDiffOutFile);
 	QImage((uchar*)warp_data,mainwidth,mainheight,QImage::Format_ARGB32).save(argv[7]);
 
 	delete [] leftP ;
