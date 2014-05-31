@@ -1,10 +1,10 @@
 #include <QImage>
 #include <qmath.h>
-#include <lk_utils.h>
-#include <lk_conv.h>
-#include <lk_vec2f.h>
-#include <lk_vec2i.h>
-#include <lk_mat22f.h>
+#include <src/lk_utils.h>
+#include <src/lk_conv.h>
+#include <src/lk_vec2f.h>
+#include <src/lk_vec2i.h>
+#include <src/lk_mat22f.h>
 #include <QTime>
 #include <iostream>
 //#include <omp.h>
@@ -104,7 +104,20 @@ int main(int argc, char *argv[])
 	QRgb * warp_data = (QRgb *)warp_result_image.bits();
 
 
-	int mainwidth = warp_result_image.width(),mainheight = warp_result_image.height(),width,ix,iy,ik,tx,ty,ux,uy,wx,wy,level,k;
+    int mainwidth = warp_result_image.width(),
+            mainheight = warp_result_image.height(),
+            width,
+            ix,
+            iy,
+            ik,
+            tx,
+            ty,
+            ux,
+            uy,
+            wx,
+            wy,
+            level,
+            k;
 	bool invalid, invalidshift;
 	const QRgb * imageGradXwindow, * imageGradYwindow,* rightJL,* leftJL;
 	lk_vec2f iterativeLK,res_disparity,*g,*d,*u,*b,*n,u0;
@@ -139,8 +152,8 @@ int main(int argc, char *argv[])
 			g[__LK_PYRAMIDE_LEVELS - 1] = lk_vec2f(0,0);
 			for ( level = __LK_PYRAMIDE_LEVELS - 1; level >= 0; --level)
 			{
-				u[level] = u0 / powf (2,level);	 //!< Положение точки u на текущем уровне
-				iu[level] = u[level].round (); //!< Округленное значение
+                u[level] = u0 / powf (2,level);     //!< Положение точки u на текущем уровне
+                iu[level] = u[level].round ();      //!< Округленное значение
 				d[level] = lk_vec2f(0,0);
 				imageGradXwindow = (const QRgb *) leftDX[level].bits ();
 				imageGradYwindow = (const QRgb *) leftDY[level].bits ();
