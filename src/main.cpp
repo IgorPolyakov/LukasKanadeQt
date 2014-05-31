@@ -7,7 +7,6 @@
 #include <src/lk_mat22f.h>
 #include <QTime>
 #include <iostream>
-//#include <omp.h>
 
 int main(int argc, char *argv[])
 {
@@ -42,23 +41,9 @@ int main(int argc, char *argv[])
 	imgM = imgM.convertToFormat(QImage::Format_ARGB32);
 	lk_conv gconv = lk_utils::gaussian_conv_kernel (5);
 
-	//    imgLeft.save ("l.png");
-	//    imgRight.save ("r.png");
 	imgLeft = gconv*imgLs;
 	imgRight= gconv*imgRs;
-	//    lk_conv hedge(5,1),vedge(1,5);
-	//    hedge[0][0] =  -1;
-	//    hedge[1][0] =  8;
-	//    hedge[2][0] =  0;
-	//    hedge[3][0] =  -8;
-	//    hedge[4][0] =  1;
-	//    vedge[0][0] =  -1;
-	//    vedge[0][1] =  8;
-	//    vedge[0][2] =  0;
-	//    vedge[0][3] =  -8;
-	//    vedge[0][4] =  1;
-	//    hedge.mult (1.0f/12.0f);
-	//    vedge.mult (1.0f/12.0f);
+
 	lk_conv hedge(3,1),vedge(1,3);
 	hedge[0][0] =  -0.5;
 	hedge[1][0] =  0;
@@ -134,8 +119,6 @@ int main(int argc, char *argv[])
 	difftime = timer1.elapsed () - curtime;
 	curtime = timer1.elapsed();
     std::cout << "Constructors " << 0.001f * difftime << " (" << 0.001f * curtime << ")" << " seconds\n";
-
-	//#pragma omp parallel for firstprivate(leftP,rightP,leftDX,leftDY, hsv_data, diff_data, warp_data,mainheight,mainwidth) private(g,d,u,iu,ix,iy,ik,b,n,iterativeLK,Gradient_Matrix,res_disparity,int_disparity,magnitute,amplitude,rValue,lValue,diff,imageGradXwindow,imageGradYwindow,invalid,invalidshift,width,rightJL,leftJL,wx,wy,k,level,tx,ty) private (uy,ux,u0,rx,ry)
 
 	for (ux = 0; ux < mainwidth; ++ux)
 	{
@@ -233,17 +216,8 @@ int main(int argc, char *argv[])
 				barrier = perc + 0.1;
 			}
 		}//
-		//	free(g);
-		//	free(d);
-		//	free(u);
-		//	free(iu);
-		//	free(b);
-		//	free(n);
 	}//End of each point
 	std::cout << "Time for picture " << mainwidth << "x" << mainheight << " is " << 0.001f * timer1.elapsed() << " seconds\n";
-    //QString nameHsvOutFile;
-    //nameHsvOutFile = "HSV_MAP " + QString (argv[3]) + ".png";
-    //QString nameDiffOutFile = "DIFF_MAP .png";
 
     QString nameHsvOutFile = ("HSV_MAP" + QString (argv[3]) + " " + QString (argv[4]) + " " + QString (argv[5])  + " " + QString (argv[6])  + " " + QString (argv[7])  + ".png");
     QString nameDiffOutFile = ("DIFF_MAP" + QString (argv[3]) + " " + QString (argv[4]) + " " + QString (argv[5])  + " " + QString (argv[6])  + " " + QString (argv[7])  + ".png");
