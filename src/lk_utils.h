@@ -2,8 +2,8 @@
 #define LK_UTILS_H
 
 #include <QtGui/QImage>
-#include "lk_vec2f.h"
-#include "lk_conv.h"
+#include "src/lk_vec2f.h"
+#include "src/lk_conv.h"
 
 //! @namespace lk_utils - Набор функций для работы с изображением
 

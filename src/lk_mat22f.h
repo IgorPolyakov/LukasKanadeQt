@@ -12,7 +12,7 @@
 #if defined (__SSE4_2__) || defined (__SSE4_1__)
 #include <smmintrin>
 #endif
-#include <lk_vec2f.h>
+#include <src/lk_vec2f.h>
 
 //! @class lk_mat22f - Класс матриц 2х2 с плавающей запятой для проведения вычислений
 

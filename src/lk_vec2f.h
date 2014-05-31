@@ -1,7 +1,7 @@
 #ifndef LK_VEC2F_H
 #define LK_VEC2F_H
 
-#include <lk_vec2i.h>
+#include <src/lk_vec2i.h>
 
 //! @class lk_vec2f - Класс двуемрного вектора чисел с плавающей запятой
 
